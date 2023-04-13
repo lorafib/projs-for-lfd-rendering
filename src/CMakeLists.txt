@@ -6,7 +6,7 @@ file(GLOB_RECURSE HEADERS "*.h")
 file(GLOB_RECURSE SOURCES "*.cpp")
 
 # define target
-add_executable(${TARGET} ${SOURCES} ${HEADERS})
+add_executable(${TARGET} ${SOURCES} ${HEADERS} "lightfield.h")
 
 # forces executables to be compiled to src folder, to allow relative paths for shaders
 set_target_properties(${TARGET} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
@@ -16,8 +16,15 @@ set_target_properties(${TARGET} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CUR
 # ----------------------------------------------------------
 # dependencies
 if(WIN32)
-	add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/../external/cppgl/external/thirdparty/win/bin/x64" $<TARGET_FILE_DIR:${TARGET}>)
-	add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/external/cppgl/cppgl.dll" $<TARGET_FILE_DIR:${TARGET}>)
+	set(copyDest \"${CMAKE_CURRENT_SOURCE_DIR}\")
+	set(copySource \"${CMAKE_CURRENT_SOURCE_DIR}/../out/build/x64-Debug/external/cppgl/*.dll\")
+	set(copySourceGlew \"${CMAKE_CURRENT_SOURCE_DIR}/../subtrees/glew/bin/*.dll\")
+	#THESE STRING ESCAPES NEEDS TO BE THERE
+	STRING(REGEX REPLACE "/" "\\\\" copyDest \"${CMAKE_CURRENT_SOURCE_DIR}\")
+	STRING(REGEX REPLACE "/" "\\\\" copySource \"${CMAKE_CURRENT_SOURCE_DIR}/../out/build/x64-Debug/external/cppgl/*.dll\")
+	STRING(REGEX REPLACE "/" "\\\\" copySourceGlew \"${CMAKE_CURRENT_SOURCE_DIR}/../out/build/x64-Debug/external/cppgl/subtrees/glew/bin/*.dll\")
+	add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND COMMAND copy ${copySource}  ${copyDest})
+	add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND COMMAND copy ${copySourceGlew}  ${copyDest})
 endif()
 
 # built libs
