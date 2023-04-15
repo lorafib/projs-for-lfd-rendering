@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
     int count; 
     GLFWmonitor** monitors = glfwGetMonitors(&count);
     glfwMakeContextCurrent(Context::instance().glfw_window);
-    glfwGetMonitorPos(monitors[1], &xpos, &ypos);
+    glfwGetMonitorPos(monitors[count-1], &xpos, &ypos);
     std::cout << "Light field display at: " << xpos << ", " << ypos << std::endl;
     glClearColor(1,1,1,1);
 
