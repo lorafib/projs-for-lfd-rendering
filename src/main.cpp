@@ -31,6 +31,21 @@ void keyboard_callback(int key, int scancode, int action, int mods) {
     }
 }
 
+void display_text() {
+    ImGui::SetNextWindowPos(ImVec2(Context::resolution().x - Context::resolution().x / 4, Context::resolution().y / 24));
+    ImGui::SetNextWindowSize(ImVec2(250, 100));
+    if (ImGui::Begin("Algorithm", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoBackground)){
+        ImGui::SetWindowFontScale(1.2f);
+        if (ourAlgorithm) {
+            ImGui::TextColored(ImVec4(0.0f, 0.0f, 0.0f, 1.0f), "Our Algorithm");
+        }
+        else {
+            ImGui::TextColored(ImVec4(0.0f, 0.0f, 0.0f, 1.0f), "Standard Algorithm");
+        }
+    }
+    ImGui::End();
+}
+
 
 
 // --------------------------------------------------------------------
@@ -91,6 +106,9 @@ int main(int argc, char** argv) {
         lightfield->interlacing(ourAlgorithm);
         Context::swap_buffers();
         glFinish();
+
+        //Display which method is currently rendered
+        if (!moveToLightfieldDisplay) display_text();
     }
 
     return 0;
