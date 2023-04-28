@@ -71,6 +71,15 @@ int main(int argc, char** argv) {
     GLFWmonitor** monitors = glfwGetMonitors(&count);
     glfwMakeContextCurrent(Context::instance().glfw_window);
     glfwGetMonitorPos(monitors[count-1], &xpos, &ypos);
+
+    std::cout << "___________________________________" << std::endl 
+        << "Controls: " << std::endl
+        << "[T] for toggling between ours and standard rendering. " << std::endl
+        << "[M] to move the window to a second display (your Looking Glass Display, see README for information about calibration data)." << std::endl
+        << "[Enter] to take a screenshot." << std::endl
+        << "[F1] for timers and other information." << std::endl
+        << "___________________________________" << std::endl;
+        
     std::cout << "Light field display at: " << xpos << ", " << ypos << std::endl;
     glClearColor(1,1,1,1);
 

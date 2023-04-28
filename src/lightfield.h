@@ -179,7 +179,7 @@ void Lightfield::getFrustumParameters() {
  
         //Calculate how much the aspect ratio has to be adapted to enclose a full number of view repetitions
         partial_repeats_outside = (number_of_views - (i_tl + 1)) / number_of_views + (i_br + 1) / number_of_views;
-        partial_repeat_tl = int(glm::mod(round((partial_repeats_outside) * number_of_views) + i_br_f + round((pitch - floor(pitch)) * number_of_views), float(number_of_views)));
+        partial_repeat_tl = int(glm::mod(roundf((partial_repeats_outside) * number_of_views) + i_br_f + roundf((pitch - floor(pitch)) * number_of_views), float(number_of_views)));
 
         //Calculate new aspect ratio and field of view scaling factor
         aspectRatioNew = (BBDimensionsImage.x + partial_repeats_outside * (repeat_w / (cos(abs(tiltAngle))))) / BBDimensionsImage.y;

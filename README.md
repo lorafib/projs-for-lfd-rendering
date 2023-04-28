@@ -14,3 +14,21 @@ Download and unzip the code from Github. Open the unzipped folder as a new proje
 
 ## Build instructions Linux
 Download and unzip the code from Github. Build and run the program with CMake.
+
+### Install dependencies 
+
+```
+apt-get install -y build-essential libx11-dev xorg-dev libopengl-dev freeglut3-dev cmake
+apt-get install -y libassimp-dev # optional, to reduce compile times
+```
+
+### Setup and build
+
+```
+mkdir build
+cd build
+cmake ..
+make -j
+cd ../src
+./lfd_rendering
+```
